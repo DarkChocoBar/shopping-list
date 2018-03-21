@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <title>ShoppingList</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <nav>
+    <div class = "nav-wrapper">
+      <a class = "brand-logo center">ShoppingList</a>
+    </div>
+  </nav>
+    <ul></ul>
+
+    <script type="text/javascript">
+      const electron = require('electron');
+      const {ipcRenderer} = electron;
+      const ul = document.querySelector('ul');
+
+      ipcRenderer.on('item:add', function(e, item) {
+          ul.className = "collection";    // have to use single quote?
+          const li = document.createElement('li');
+          li.className = "collection-item";
+          const itemText = document.createTextNode(item);
+          const i = document.createElement('i');
+          i.className = 'material-icons right';
+          i.innerHTML = 'close';
+          li.appendChild(itemText);
+          li.appendChild(i);
+          ul.appendChild(li);
+      });
+
+      ipcRenderer.on('item:clear', function() {
+        // console.log("blablablabla");
+        // handle clear item action
+        // console.log(ul.innerHTML);
+        ul.innerHTML = '';
+        ul.className = '';
+        // console.log(ul.innerHTML);
+      });
+
+      // $(".i").hover(function(){
+      //     $(this).className = 'material-icons right red';
+      // });
+
+    </script>
+</body>
+</html>
